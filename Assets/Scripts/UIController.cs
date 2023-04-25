@@ -1,28 +1,32 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 public class UIController : MonoBehaviour
 {
-    // Delegates to select prefab to to build
-    public Action OnRoadPlacement;
-    public Action OnHousePlacement;
-    public Action OnSpecialPlacement;
-    public Action OnBigStructurePlacement;
-
-    public Button placeHouseButton;
-    public Button placeRoadButton;
-    public Button placeSpecialButton;
-    public Button placeBigButton;
+    public Action OnRoadPlacement; 
+    public Action OnHousePlacement; 
+    public Action OnSpecialPlacement; 
+    public Action OnBigStructurePlacement; 
+    public Action OnPoliceStationPlacement;
+    public Action OnHospitalPlacement; 
+    public Action OnFireStationPlacement;
+    public Button placeRoadButton; 
+    public Button placeHouseButton; 
+    public Button placeSpecialButton; 
+    public Button placeBigStructureButton; 
+    public Button placePoliceStationButton;
+    public Button placeHospitalButton; 
+    public Button placeFireStationButton;
 
     public Color outlineColor;
     List<Button> buttonList;
 
     private void Start()
     {
-        buttonList = new List<Button> { placeHouseButton, placeRoadButton, placeSpecialButton, placeBigButton };
+        buttonList = new List<Button> { placeHouseButton, placeRoadButton, placeSpecialButton, placeBigStructureButton, placePoliceStationButton, placeHospitalButton, placeFireStationButton };
 
         placeRoadButton.onClick.AddListener(() =>
         {
@@ -45,17 +49,33 @@ public class UIController : MonoBehaviour
             OnSpecialPlacement?.Invoke();
 
         });
-
-        placeBigButton.onClick.AddListener(() =>
+        placeBigStructureButton.onClick.AddListener(() =>
         {
             ResetButtonColor();
-            ModifyOutline(placeBigButton);
+            ModifyOutline(placeBigStructureButton);
             OnBigStructurePlacement?.Invoke();
-
+        });
+        placePoliceStationButton.onClick.AddListener(() =>
+        {
+            ResetButtonColor();
+            ModifyOutline(placePoliceStationButton);
+            OnPoliceStationPlacement?.Invoke();
+        });
+        placeHospitalButton.onClick.AddListener(() =>
+        {
+            ResetButtonColor();
+            ModifyOutline(placeHospitalButton);
+            OnHospitalPlacement?.Invoke();
+        });
+        placeFireStationButton.onClick.AddListener(() =>
+        {
+            ResetButtonColor();
+            ModifyOutline(placeFireStationButton);
+            OnFireStationPlacement?.Invoke();
         });
     }
 
-    // Change the outline color of a button to indicate which build component was selected
+    // Apply the button outline
     private void ModifyOutline(Button button)
     {
         var outline = button.GetComponent<Outline>();
@@ -63,8 +83,8 @@ public class UIController : MonoBehaviour
         outline.enabled = true;
     }
 
-    // Remove the outline color of a button
-    private void ResetButtonColor()
+    // Remove the outline from around the button
+    public void ResetButtonColor()
     {
         foreach (Button button in buttonList)
         {
